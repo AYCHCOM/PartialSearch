@@ -45,6 +45,11 @@ class Chef
       start = args.include?(:start) ? args[:start] : 0
       rows = args.include?(:rows) ? args[:rows] : 1000
       query_string = "search/#{type}?q=#{escape(query)}&sort=#{escape(sort)}&start=#{escape(start)}&rows=#{escape(rows)}"
+
+      if args[:keys].kind_of?(Array)
+        args[:keys] = args[:keys].map {|e| [e, e.to_s.split('.')]}.to_h
+      end
+
       if args[:keys]
         response = @rest.post_rest(query_string, args[:keys])
         response_rows = response['rows'].map { |row| row['data'] }
