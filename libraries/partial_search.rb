@@ -47,7 +47,7 @@ class Chef
       query_string = "search/#{type}?q=#{escape(query)}&sort=#{escape(sort)}&start=#{escape(start)}&rows=#{escape(rows)}"
 
       if args[:keys].kind_of?(Array)
-        args[:keys] = args[:keys].map {|e| [e, e.to_s.split('.')]}.to_h
+        args[:keys] = Hash[args[:keys].map {|e| [e, e.to_s.split('.')]}]
       end
 
       if args[:keys]
